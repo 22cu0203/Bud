@@ -18,10 +18,8 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::get('/', [PostController::class, 'index']);   
 
-Route::get('/', function() {
-    return view('posts.index');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -33,6 +31,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/posts', [PostController::class, 'index']);   
 
 require __DIR__.'/auth.php';
