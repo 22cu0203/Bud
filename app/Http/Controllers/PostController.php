@@ -11,6 +11,7 @@ class PostController extends Controller
     public function index(Post $post)
     {
         return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);
+    //getPaginateByLimit()はPost.phpで定義したメソッドです。    
     }
     /*
      * 特定IDのpostを表示する
@@ -20,8 +21,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        // return view('posts/show')->with(['post' => $post]);
-        dd($post);
+        return view('posts/show')->with(['post' => $post]);
+        // dd($post);
     }
     
 }
