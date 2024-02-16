@@ -41,10 +41,9 @@ class PostController extends Controller
         //dd($request->all());
     }    
     
-    public function edit(Post $post,Category $category)
+    public function edit(Post $post)
     {
-        //return view('posts.edit')->with(['post' => $post]);
-        return view('posts.edit')->with(['post' => $post,'categories' => $category->get()]);
+        return view('posts.edit')->with(['post' => $post]);
     }
     
     public function update(PostRequest $request, Post $post)
