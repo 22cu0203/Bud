@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        Bud
-    </x-slot>
     <body>
         <h1 class="title">編集画面</h1>
         <div class="content">
