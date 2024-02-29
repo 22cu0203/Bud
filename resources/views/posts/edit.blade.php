@@ -1,12 +1,20 @@
+<!DOCTYPE HTML>
+
+
+<!--投稿編集画面のView-->
+
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <title>Bud</title>
-        <!-- Fonts -->
+        <!-- フォント -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <!--TailWind使用-->
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <x-app-layout>
+        <x-guest-layout>
         <body>
             <div class="shadow-lg bg-slate-50 rounded-xl border p-8">
                 <div class="content">
@@ -23,7 +31,7 @@
                         
                         <!--本文に関するView-->
                         <div class='content__body'>
-                            <x-input-label :value="__('本文')" />
+                            <x-input-label :value="__('企画内容')" />
                             <textarea name="post[body]" class="rounded-md" >{{ $post->body }}</textarea>
                             <x-input-error class="mt-2" :messages="$errors->first('post.body')" />
     
@@ -45,5 +53,6 @@
                 </div>
             </div>
         </body>
+        </x-guest-layout>
     </x-app-layout>
 </html>

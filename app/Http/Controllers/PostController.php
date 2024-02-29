@@ -1,5 +1,12 @@
 <?php
 
+/*
+ *ファイル名	: PostController.php
+ *概要			: 投稿に関するコントローラー
+ *作成者		: 石川歩夢
+ *更新内容		: 2024/01/16 作成
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
