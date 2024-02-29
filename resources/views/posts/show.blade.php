@@ -8,18 +8,15 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Posts</title>
+        <title>Bud/{{ $post->title }}</title>
         <!-- フォント -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!--TailWind使用-->
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <x-app-layout>
-        <body>
-            
-            <!--投稿の表示に関するView-->
-            <div class="shadow-lg bg-slate-50 rounded-xl border p-8">
-            
+        <x-guest-layout>
+            <body>
                 <!--タイトルに関するView-->
                 <h2 class="title text-2xl font-bold">
                     {{ $post->title }}
@@ -50,7 +47,7 @@
                         <a href="/">{{ __('戻る') }}</a>
                     </x-secondary-button>
                 </div>
-            </div>
-        </body>
+            </body>
+        </x-guest-layout>
     </x-app-layout>
 </html>

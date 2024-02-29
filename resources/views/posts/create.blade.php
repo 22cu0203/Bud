@@ -7,15 +7,15 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <title>Bud</title>
+        <title>Bud/投稿作成</title>
         <!-- フォント -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!--TailWind使用-->
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <x-app-layout>
-        <body>
-            <x-guest-layout>
+        <x-guest-layout>
+            <body>
                 <form action="/posts" method="POST">
                     @csrf
                     
@@ -61,7 +61,7 @@
                     </div>
                     
                 </form>
-            </x-guest-layout>
-        </body>
+            </body>
+        </x-guest-layout>
     </x-app-layout>
 </html>

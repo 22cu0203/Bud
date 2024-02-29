@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file LoginRequest.php
+ * @brief ログインリクエストに関する処理
+ */
+
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
@@ -11,16 +16,19 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
+    /*
+     * リクエストの認可を行う
+     *
+     * @return bool
      */
     public function authorize(): bool
     {
+        // 常に true を返し、すべてのリクエストを認可する
         return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * バリデーションルールを定義する
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
@@ -32,41 +40,53 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    /**
-     * Attempt to authenticate the request's credentials.
+    /*
+     * ユーザーの認証を行う
+     *
+     * @return void
      *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function authenticate(): void
     {
+        // レート制限されていないことを確認する
         $this->ensureIsNotRateLimited();
 
+        // ユーザーの認証を試みる
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            // 認証に失敗した場合、レートリミッターを更新し、例外をスローする
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
         }
-
+        
+        // 認証に成功した場合、レートリミッターをクリアする
         RateLimiter::clear($this->throttleKey());
     }
 
-    /**
-     * Ensure the login request is not rate limited.
+    /*
+     * レート制限されていないことを確認する
+     *
+     * @return void
      *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function ensureIsNotRateLimited(): void
     {
+        // レート制限されていない場合はメソッドを終了する
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
+        // Lockout イベントを発生させる
         event(new Lockout($this));
 
+        // リトライまでの時間を取得する
         $seconds = RateLimiter::availableIn($this->throttleKey());
-
+        
+        // レート制限エラーメッセージと共に ValidationException をスローする
         throw ValidationException::withMessages([
             'email' => trans('auth.throttle', [
                 'seconds' => $seconds,
@@ -75,11 +95,14 @@ class LoginRequest extends FormRequest
         ]);
     }
 
-    /**
-     * Get the rate limiting throttle key for the request.
+    /*
+     * レート制限のキーを生成する
+     *
+     * @return string
      */
     public function throttleKey(): string
     {
+        // メールアドレスとIPアドレスを組み合わせてキーを生成する
         return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
     }
 }

@@ -1,8 +1,11 @@
 <?php
 
-/*
-    カテゴリーに関するController
-*/
+/**
+ * @file CategoryController.php
+ * @brief カテゴリーに関するコントローラー
+ * 
+ * @author Ayumu Ishikawa
+ */
 
 namespace App\Http\Controllers;
 
@@ -13,9 +16,15 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    // 任意のカテゴリーとその投稿をViewにを足すための処理
+    /*
+     * カテゴリーの一覧と関連する投稿を表示する
+     *
+     * @param \App\Models\Category $category 表示するカテゴリー
+     * @return \Illuminate\Http\RedirectResponse ('categories.index')
+     */
     public function index(Category $category)
     {
+        // カテゴリーと関連する投稿をビューに渡す
         return view('categories.index')->with(['category' => $category,'posts' => $category->getByCategory()]);
     }
 }

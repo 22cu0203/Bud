@@ -7,7 +7,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <title>Bud</title>
+        <title>Bud/投稿一覧/{{ $category->name }}</title>
         <!-- フォント -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!--TailWind使用-->
@@ -15,8 +15,9 @@
     </head>
     <x-app-layout>
         
-        <!--表示しているカテゴリーをヘッダーで表示-->
+        <!--ヘッダー-->
         <x-slot name="header">
+            <!--表示しているカテゴリー-->
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     {{ $category->name }}
             </h2>
@@ -31,11 +32,11 @@
             
             <!--投稿全体に関するView-->
             <div class='posts'>
-                <div class="flex flex-wrap grid grid-cols-2 gap-10 ">
+                <div class="flex flex-wrap grid md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @foreach ($posts as $post)
                 
                     <!--個々の投稿に関するView-->
-                    <div class="shadow-lg rounded border bg-slate-50 hover:bg-slate-300 p-3 flex justify-center items-center">
+                    <div class="shadow-lg rounded border bg-slate-50 hover:bg-slate-300 py-5 flex justify-center items-center h-80">
                         <div class='post'>
                             
                             <!--タイトルに関するView-->
@@ -60,10 +61,10 @@
                         </div>
                     </div>    
                 @endforeach
-            </div>:
+            </div>
             
             <!--ペジネーションに関するView-->
-            <div class='paginate text-center'>
+            <div class='paginate flex justify-center'>
                 {{ $posts->links() }}
             </div>
             
